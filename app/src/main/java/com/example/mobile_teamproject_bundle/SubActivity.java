@@ -3,157 +3,196 @@
 package com.example.mobile_teamproject_bundle;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class SubActivity extends AppCompatActivity {
+
+    String str;
+    String keyword;
+    ListView mProductListview;
+   // PriceListAdapter adapter;
+    PriceListParser naverSearchPaser = new PriceListParser();
+    ArrayList<PriceDataStruct> Data = new ArrayList<PriceDataStruct>();
+    PriceDataStruct xmlData = new PriceDataStruct();
+    /*ArrayList<String> result_title_list;
+    ArrayList<String> result_link_list;
+    ArrayList<Integer> result_price_list;
+    ArrayList<String> result_img_list;*/
+    String[] titles = new String[60];
+    Integer[] prices = new Integer[60];
+    String[] markets = new String[60];
+    String[] images = new String[60];
+    String[] links = new String[60];
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe);
-    }
 
-   // String str;
-    String keyword;
+        /*result_link_list = new ArrayList<>();
+        result_title_list = new ArrayList<>();
+        result_price_list = new ArrayList<>();
+        result_img_list = new ArrayList<>();*/
 
-    public void onClick(View v) {
-        System.out.println("enter");
-        TextView searchText = (TextView) findViewById(R.id.textView1);
-        //final TextView searchResult = (TextView) findViewById(R.id.searchResult);
-        keyword = searchText.getText().toString();  //keyword: 시금치
-        System.out.println(" "+keyword);
-        getNaverSearch(keyword);
-        //searchResult.setText(str);
-    }
-
-    /*Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            try {
-
-                //Intent intent = getIntent();
-                //keyword = intent.getStringExtra("keyword");
-                //str =
-                getNaverSearch(keyword);
-
-                runOnUiThread(new Runnable() {
-                    @Override
+        Button buttonBuy = (Button) findViewById(R.id.button);
+        buttonBuy.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView searchText = (TextView) findViewById(R.id.textView1);
+                keyword = searchText.getText().toString();  //keyword: 시금치
+                new Thread() {
                     public void run() {
-                        //TextView searchResult2 = (TextView) findViewById(R.id.searchResult2);
-                        //searchResult2.setText(str);
-
+                        getNaverSearch(keyword);
                     }
-                });
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                }.start();
+                //Log.d("tag","enter");
+                setContentView(R.layout.list);
             }
-        }
-    });//.start();
-    //thread.start();*/
+        });
+    }
 
     public void getNaverSearch(String keyword) {
-
-        String clientID = "NjG4PNpPgpJuqszwoz2m";
+        String clientId = "NjG4PNpPgpJuqszwoz2m";
         String clientSecret = "qzKVyrvfUk";
-        StringBuffer sb = new StringBuffer();
 
+        String text = null;
         try {
-
-
-            String text = URLEncoder.encode(keyword, "UTF-8");
-
-
-
-            String apiURL = "https://openapi.naver.com/v1/search/shop"+ text + "&display=10" + "&start=1";
-            //"https://openapi.naver.com/v1/search/encyc.xml?query=" + text + "&display=10" + "&start=1";
-
-
-            URL url = new URL(apiURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("X-Naver-Client-Id", clientID);
-            conn.setRequestProperty("X-Naver-Client-Secret", clientSecret);
-
-            int responseCode = conn.getResponseCode();
-            BufferedReader br;
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-            }
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            System.out.println(response.toString());
-        } catch (Exception e) {
-            System.out.println(e);
+            text = URLEncoder.encode("컴퓨터", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("검색어 인코딩 실패", e);
         }
-     }
-           /* XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            XmlPullParser xpp = factory.newPullParser();
-            String tag;
-            //inputStream으로부터 xml값 받기
-            xpp.setInput(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
-            xpp.next();
-            int eventType = xpp.getEventType();
-
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                switch (eventType) {
-                    case XmlPullParser.START_TAG:
-                        tag = xpp.getName(); //태그 이름 얻어오기
-
-                        if (tag.equals("item")) ; //첫번째 검색 결과
-                        else if (tag.equals("title")) {
-
-                            sb.append("제목 : ");
-
-                            xpp.next();
 
 
-                            sb.append(xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
-                            sb.append("\n");
-
-                        } else if (tag.equals("description")) {
-
-                            sb.append("내용 : ");
-                            xpp.next();
+        String apiURL = "https://openapi.naver.com/v1/search/shop.xml?query=" + text + "&display=50" + "&start=1" + "&sort=asc";    // json 결과
+        //String apiURL = "https://openapi.naver.com/v1/search/shop.xml?query="+ text; // xml 결과
 
 
-                            sb.append(xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
-                            sb.append("\n");
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", clientId);
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+        String responseBody = get(apiURL, requestHeaders);
+        for(int i=0;i<Data.size();i++){
+            //strArr[i] = Data.get(i).getTitle();
+            titles[i] = Data.get(i).getTitle();
+            images[i] = Data.get(i).getImage();
+            prices[i] = Data.get(i).getLprice();
+            markets[i] = Data.get(i).getMallName();
+            links[i] = Data.get(i).getLink();
+        }
+        CustomListAdapter adapter  = new
+                CustomListAdapter(this,titles,images,markets,prices);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ListView listview = (ListView) findViewById(R.id.productListview);
+                listview.setAdapter(adapter);
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Log.d("tag",links[position]);
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(links[position])));
+                    }
+                });
+            }
+        });
+    }
 
-
-                        }
-                        break;
+            private String get(String apiUrl, Map<String, String> requestHeaders) {
+                HttpURLConnection con = connect(apiUrl);
+                try {
+                    con.setRequestMethod("GET");
+                    for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
+                        con.setRequestProperty(header.getKey(), header.getValue());
+                    }
+                    int responseCode = con.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
+                        return readBody(con.getInputStream());
+                    } else { // 에러 발생
+                        return readBody(con.getErrorStream());
+                    }
+                } catch (IOException | ParserConfigurationException e) {
+                    throw new RuntimeException("API 요청과 응답 실패", e);
+                } finally {
+                    con.disconnect();
                 }
-
-                eventType = xpp.next();
-
-
             }
 
-        } catch (Exception e) {
-            return e.toString();
 
+    private HttpURLConnection connect(String apiUrl) {
+        try {
+            URL url = new URL(apiUrl);
+            //Log.d("tag",naverSearchPaser.GetXmlData(url,"컴퓨터").get(0).getTitle());
+            return (HttpURLConnection)url.openConnection();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+        } catch (IOException e) {
+            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
         }
+    }
 
-        return sb.toString();
-    }*/
+
+
+    private String readBody(InputStream body) throws ParserConfigurationException {
+        InputStreamReader streamReader = new InputStreamReader(body);
+
+        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
+            StringBuilder responseBody = new StringBuilder();
+
+            Data = naverSearchPaser.GetXmlData(body,"컴퓨터");
+
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                responseBody.append(line);
+            }
+
+            return responseBody.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
+        }
+    }
 }
