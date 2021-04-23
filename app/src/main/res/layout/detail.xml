@@ -6,7 +6,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#eeeeee"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:descendantFocusability="blocksDescendants">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Buy"

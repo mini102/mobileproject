@@ -1,5 +1,6 @@
 package com.example.mobile_teamproject_bundle;
 
+import com.example.mobile_teamproject_bundle.GlideApp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -63,7 +64,7 @@ public class CustomListAdapter extends ArrayAdapter {
             Log.d("errer","IOException");
         }*/
         //imageView.setImageURI(Uri.parse(images[position]));
-        Glide.with(context).load(images[position]).into(imageView);
+        GlideApp.with(context).load(images[position]).into(imageView);
         return rowView;
     }
 }

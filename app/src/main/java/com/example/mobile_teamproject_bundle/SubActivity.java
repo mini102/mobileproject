@@ -74,11 +74,6 @@ public class SubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe);
 
-        /*result_link_list = new ArrayList<>();
-        result_title_list = new ArrayList<>();
-        result_price_list = new ArrayList<>();
-        result_img_list = new ArrayList<>();*/
-
         Button buttonBuy = (Button) findViewById(R.id.button);
         buttonBuy.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -129,8 +124,10 @@ public class SubActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                //Log.d("tag", findViewById(R.id.productListview).toString());
                 ListView listview = (ListView) findViewById(R.id.productListview);
                 listview.setAdapter(adapter);
+                //Log.d("tag", String.valueOf(listview));
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
