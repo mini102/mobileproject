@@ -103,7 +103,7 @@
                     android:text="Wed" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -119,7 +119,7 @@
                     android:text="Fri" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/age"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -450,7 +450,7 @@
                             android:background="#aaa" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="40dp"
@@ -458,7 +458,7 @@
                             android:text="1am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="80dp"
@@ -466,7 +466,7 @@
                             android:text="2am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="120dp"
@@ -474,7 +474,7 @@
                             android:text="3am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="160dp"
@@ -482,7 +482,7 @@
                             android:text="4am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="200dp"
@@ -490,7 +490,7 @@
                             android:text="5am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="240dp"
@@ -498,7 +498,7 @@
                             android:text="6am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="280dp"
@@ -506,7 +506,7 @@
                             android:text="7am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="320dp"
@@ -514,7 +514,7 @@
                             android:text="8am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="360dp"
@@ -522,7 +522,7 @@
                             android:text="9am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="400dp"
@@ -530,7 +530,7 @@
                             android:text="10am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="440dp"
@@ -538,7 +538,7 @@
                             android:text="11am" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="480dp"
@@ -546,7 +546,7 @@
                             android:text="12pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="520dp"
@@ -554,7 +554,7 @@
                             android:text="1pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="560dp"
@@ -562,7 +562,7 @@
                             android:text="2pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="600dp"
@@ -570,7 +570,7 @@
                             android:text="3pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="640dp"
@@ -578,7 +578,7 @@
                             android:text="4pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="680dp"
@@ -586,7 +586,7 @@
                             android:text="5pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="720dp"
@@ -594,7 +594,7 @@
                             android:text="6pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="760dp"
@@ -602,7 +602,7 @@
                             android:text="7pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="800dp"
@@ -610,7 +610,7 @@
                             android:text="8pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="840dp"
@@ -618,7 +618,7 @@
                             android:text="9pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="880dp"
@@ -626,7 +626,7 @@
                             android:text="10pm" />
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/height"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="920dp"

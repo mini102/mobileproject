@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,24 +70,46 @@ public class SubActivity extends AppCompatActivity {
     String[] markets = new String[60];
     String[] images = new String[60];
     String[] links = new String[60];
+    String[] ingredients;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe);
 
-        Button buttonBuy = (Button) findViewById(R.id.button);
-        buttonBuy.setOnClickListener(new Button.OnClickListener() {
+        Intent intent = getIntent();
+        String foodNm = intent.getStringExtra("name");
+        String recipe = intent.getStringExtra("recipe");
+        String word = intent.getStringExtra("ingredients");
+
+        TextView Recipe = (TextView)findViewById(R.id.food_recipe);
+        Recipe.setText(recipe);
+        TextView FN = (TextView)findViewById(R.id.foodNm);
+        FN.setText(foodNm);
+       //ingredients에 재료 정보 넣기 일단 임의로
+        word = word.replaceAll(" ","");
+        Log.d("재료",word);
+        ingredients = word.split(",");
+
+        IngredientAdapter Adapter  = new
+                IngredientAdapter(this,ingredients);//,foodNm,recipe);
+
+        ListView listview = (ListView) findViewById(R.id.ingredient_list);
+        listview.setAdapter((ListAdapter) Adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                TextView searchText = (TextView) findViewById(R.id.textView1);
-                keyword = searchText.getText().toString();  //keyword: 시금치
-                new Thread() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(links[position])));
+                keyword = ingredients[position];  //keyword: 시금치
+                Log.d("keyword",keyword);
+                new Thread(new Runnable() {
+                    @Override
                     public void run() {
+                        //setContentView(R.layout.list);
                         getNaverSearch(keyword);
+                        setContentView(R.layout.list);
                     }
-                }.start();
-                //Log.d("tag","enter");
-                setContentView(R.layout.list);
+                }).start();
             }
         });
     }
@@ -97,7 +120,7 @@ public class SubActivity extends AppCompatActivity {
 
         String text = null;
         try {
-            text = URLEncoder.encode("컴퓨터", "UTF-8");
+            text = URLEncoder.encode(keyword, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패", e);
         }
@@ -180,7 +203,7 @@ public class SubActivity extends AppCompatActivity {
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
             StringBuilder responseBody = new StringBuilder();
 
-            Data = naverSearchPaser.GetXmlData(body,"컴퓨터");
+            Data = naverSearchPaser.GetXmlData(body,keyword);
 
             String line;
             while ((line = lineReader.readLine()) != null) {

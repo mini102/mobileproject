@@ -25,14 +25,14 @@
       android:layout_marginTop="310dp"
       android:layout_marginEnd="53dp"
       android:layout_marginBottom="13dp"
-      app:layout_constraintBottom_toTopOf="@+id/button9"
+      app:layout_constraintBottom_toTopOf="@+id/start"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/imageView"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/pont" />
 
   <androidx.appcompat.widget.AppCompatButton
-      android:id="@+id/button9"
+      android:id="@+id/start"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:background="@color/white"
