@@ -105,11 +105,10 @@ public class SubActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        //setContentView(R.layout.list);
                         getNaverSearch(keyword);
-                        setContentView(R.layout.list);
                     }
                 }).start();
+                setContentView(R.layout.list);
             }
         });
     }

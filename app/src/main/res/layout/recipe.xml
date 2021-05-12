@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFE696"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:descendantFocusability="blocksDescendants">
 
     <ScrollView
         android:id="@+id/scrollView3"
