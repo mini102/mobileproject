@@ -50,18 +50,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userage" />
 
-    <EditText
-        android:id="@+id/ent_disease"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="ex) 당뇨병, 천식, ..."
-        app:layout_constraintStart_toEndOf="@+id/userdisease"
-        app:layout_constraintTop_toTopOf="@+id/userdisease" />
-
     <TextView
         android:id="@+id/userage"
         android:layout_width="wrap_content"
@@ -77,8 +65,8 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
         android:text="이름"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +134,7 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="248dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -165,13 +153,14 @@
         app:layout_constraintEnd_toStartOf="@+id/imageView6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/logo" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/finish"
         android:layout_width="114dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/holo_orange_dark"
         android:text="Finish"
         android:textColor="@color/white"
@@ -180,5 +169,113 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="당뇨"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.704" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="뇌혈관"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.835" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="고혈압"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.835" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="저혈압"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.835" />
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="암"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.769" />
+
+    <CheckBox
+        android:id="@+id/checkBox6"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="심장"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.704" />
+
+    <CheckBox
+        android:id="@+id/checkBox8"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="간"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.769" />
+
+    <CheckBox
+        android:id="@+id/checkBox7"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="치매"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.704" />
+
+    <CheckBox
+        android:id="@+id/checkBox9"
+        android:layout_width="72dp"
+        android:layout_height="45dp"
+        android:text="폐렴"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.769" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

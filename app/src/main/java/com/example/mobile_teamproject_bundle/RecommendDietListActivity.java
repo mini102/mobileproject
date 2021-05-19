@@ -102,8 +102,6 @@ public class RecommendDietListActivity extends AppCompatActivity {
         });*/
         int num = dataManager.getRecommendDietListResponses().size();
         int position = (int) (Math.random()*(num-1));  //0~num
-        Log.d("position", String.valueOf(position));
-        //Log.d("CntntsNo",String.valueOf(dataManager.getRecommendDietListResponses().get(position).getCntntsNo()));
         PreferenceManager.setString(mContext, "cntntsNo", String.valueOf(dataManager.getRecommendDietListResponses().get(position).getCntntsNo()));
         PreferenceManager.setString(mContext,"mainCategoryName", mainCategoryName);
         Intent intent = new Intent(getApplicationContext(), Diet_Recommend.class);
@@ -178,10 +176,6 @@ public class RecommendDietListActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        for (int i = 0; i < dataManager.getRecommendDietListResponses().size(); i++) {
-            Log.d(TAG, String.valueOf(dataManager.getRecommendDietListResponses().get(i).getCntntsNo()));
-            Log.d(TAG, String.valueOf(dataManager.getRecommendDietListResponses().get(i).getDietNm()));
         }
     }
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,14 +81,20 @@ public class SubActivity extends AppCompatActivity {
         String foodNm = intent.getStringExtra("name");
         String recipe = intent.getStringExtra("recipe");
         String word = intent.getStringExtra("ingredients");
+        String image = intent.getStringExtra("image");
 
         TextView Recipe = (TextView)findViewById(R.id.food_recipe);
         Recipe.setText(recipe);
         TextView FN = (TextView)findViewById(R.id.foodNm);
         FN.setText(foodNm);
+        ImageView img = (ImageView)findViewById(R.id.imageView4);
+        if(image == null){
+          img.setImageResource(R.drawable.ic_lipid_icon);
+        }
+        else GlideApp.with(this).load(image).into(img);
        //ingredients에 재료 정보 넣기 일단 임의로
         word = word.replaceAll(" ","");
-        Log.d("재료",word);
+        //Log.d("재료",word);
         ingredients = word.split(",");
 
         IngredientAdapter Adapter  = new

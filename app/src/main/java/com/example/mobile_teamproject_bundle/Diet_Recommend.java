@@ -30,11 +30,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Diet_Recommend extends AppCompatActivity {
-    String[] dietName = new String[6000000];
+   /* String[] dietName = new String[6000000];
     Integer[] ingredients = new Integer[600000];
     String[] cookingInfo = new String[6000000];
     String[] images = new String[6000000];
-    String[] frontImage = new String[6000000];  //썸네일, main의 레시피 부분
+    String[] frontImage = new String[6000000];  //썸네일, main의 레시피 부분*/
+
 
     private Context mContext;
     private String cntntsNo;
@@ -42,6 +43,8 @@ public class Diet_Recommend extends AppCompatActivity {
     String foodNm;
     String foodImg;
     String foodInfo;
+    String body_check = "정상체중";
+    User user;
 
     private ArrayList<String> foodName;
     private ArrayList<String> foodImage;
@@ -51,6 +54,9 @@ public class Diet_Recommend extends AppCompatActivity {
     private ArrayList<String> carbohydratesInfo;
     private ArrayList<String> proteinInfo;
     private ArrayList<String> lipidInfo;
+    public ArrayList<Body> body = new ArrayList<Body>();
+    public ArrayList<Disease> disease = new ArrayList<Disease>();
+    private ArrayList<String> Dingredient = new ArrayList<>();
 
     FoodInfo_Parser Parser = new FoodInfo_Parser();
     ArrayList<PriceDataStruct> Data = new ArrayList<PriceDataStruct>();
@@ -61,19 +67,20 @@ public class Diet_Recommend extends AppCompatActivity {
         setContentView(R.layout.waiting);
         mContext = this;
 
+        user = new User();
+        User_File file = new User_File();
+        file.User_Read(user);
+
+        Body_File read_body = new Body_File();
+        Disease_File read_disease = new Disease_File();
+        read_body.Body_Read(body);
+        read_disease.Disease_Read(disease);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 getAPI();
-                /*for (int i = 0; i < foodName.size(); i++) {
-                    Log.d("음식이름:", foodName.get(i));
-                    Log.d("재료:", materialInfo.get(i));
-                }*/
                 Recommed();
-                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                //intent.putExtra("Name",foodName);
-                //intent.putExtra("Image",foodImage);
-                //intent.putExtra("Info",recipeOrder);
             }
     }).start();
     }
@@ -142,27 +149,80 @@ public class Diet_Recommend extends AppCompatActivity {
                 }
                 eventType = xpp.next();
             }
-            for (int i = 0; i < foodName.size(); i++) {
-                Log.d("fdNm", foodName.get(i));
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
         private void Recommed () {
-            //DB의 정보와 재료 비교하여 맞는 레시피 반환, 일단은 random
-            int num = foodName.size();
-            int position = (int) (Math.random() * (num - 1)); //0~num-1
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("foodName", foodName.get(position));
-            intent.putExtra("foodImage", foodImage.get(position));
-            intent.putExtra("materialInfo", materialInfo.get(position));
-            intent.putExtra("recipeOrder", recipeOrder.get(position));
-            intent.putExtra("calorieInfo", calorieInfo.get(position));
-            intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(position));
-            intent.putExtra("proteinInfo", proteinInfo.get(position));
-            intent.putExtra("lipidInfo", lipidInfo.get(position));
+            //DB의 정보와 재료 비교하여 맞는 레시피 반환
+            int cursor=0;
+            int num = 3;
+            int position = (int) (Math.random() * (num - 1));
+            /*Log.d("질병", disease.get(0).disease_name);
+            Log.d("좋은 식재료", disease.get(0).disease_foods.get(0));
+            Log.d("좋은 식재료2", disease.get(0).disease_foods.get(1));*/
+            String[] sickness = user.disease.split("_");  //당뇨,암
+            for (int i=0;i<disease.size();i++) {
+                for (int j =0; j < sickness.length; j++) {
+                    if (disease.get(i).disease_name.contains(sickness[j])) {
+                        //num = disease.get(i).disease_foods.size();
+                        //position = (int) (Math.random() * (num - 1));
+                        //Log.d("질병",disease.get(i).disease_name);
+                        //Log.d("num", String.valueOf(disease.get(i).disease_foods.size()));
+                        for(int k =0 ;k<disease.get(i).disease_foods.size();k++) {
+                            //Log.d("add",disease.get(i).disease_foods.get(k));
+                            Dingredient.add(disease.get(i).disease_foods.get(k));
+                        }
+                    }
+                }
+            }
+            Log.d("질병 좋은 재료", String.valueOf(Dingredient));
+
+            float body_fat =  Float.parseFloat(user.body_fat_rate);  //체지방률
+            if(body_fat<18){
+                body_check = "저체중";
+            }else if(23<body_fat&&body_fat<25) body_check = "과체중";
+            else if(25<body_fat) body_check = "비만";
+
+            Log.d("체질",body_check);
+            
+            for (int i=0;i<body.size();i++) {
+                    if (body.get(i).body_name.contains(body_check)) {
+                        for(int k =0 ;k<3;k++) {
+                            //Log.d("body",body.get(i).body_foods.get(k));
+                            Dingredient.add(body.get(i).body_foods.get(k));
+                        }
+                    }
+            }
+            //Dingredient.add("마늘");
+            Log.d("+체질 좋은 재료",String.valueOf(Dingredient));
+
+            num = foodName.size();
+            position = (int) (Math.random() * (num - 1));
+
+            Log.d("size", String.valueOf(materialInfo.size()));
+            Log.d("position", String.valueOf(position));
+            //Log.d("mat", materialInfo.get(position));
+            if(materialInfo.size()!=0) {
+                for (int i = 0; i < Dingredient.size(); i++) {
+                    if (materialInfo.get(position).contains(Dingredient.get(i))) {
+                        //Log.d("Find!!!!","Yeah");
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("foodName", foodName.get(position));
+                        intent.putExtra("foodImage", foodImage.get(position));
+                        intent.putExtra("materialInfo", materialInfo.get(position));
+                        intent.putExtra("recipeOrder", recipeOrder.get(position));
+                        intent.putExtra("calorieInfo", calorieInfo.get(position));
+                        intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(position));
+                        intent.putExtra("proteinInfo", proteinInfo.get(position));
+                        intent.putExtra("lipidInfo", lipidInfo.get(position));
+                        startActivity(intent);
+                        return;
+                    }
+                }
+            }
+            Intent intent = new Intent(getApplicationContext(), Select_Diet.class);
             startActivity(intent);
         }
     }

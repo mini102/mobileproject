@@ -109,10 +109,6 @@ public class Select_Diet extends AppCompatActivity {
                         }*/
             //}
         //}).start();
-
-                for (int i = 0; i < dietSeCode.size(); i++) {
-                    Log.d("diet", dietSeCode.get(i));
-                }
                 onClickCategory();
             }
         }).start();
@@ -137,10 +133,7 @@ public class Select_Diet extends AppCompatActivity {
                 try {
                     URL url = new URL(apiUrl);
                     URLConnection urlcon = url.openConnection();
-                    Log.d("enterrrrrrrr", "hereeeeeeeeeeeeeee");
                     InputStream inputStream = urlcon.getInputStream();
-                    Log.d("sucescc", "hereeeeeeeeeeeeeee");
-
                     XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                     XmlPullParser xpp = factory.newPullParser();
                     xpp.setInput(new InputStreamReader(inputStream, "UTF-8"));
@@ -168,47 +161,36 @@ public class Select_Diet extends AppCompatActivity {
             private void onClickCategory() {
 
                 int rand = (int) (Math.random() * 4);
-                Log.d("rand", String.valueOf(rand));
                 Intent intent;
 
           switch(rand) {
             case 0:
-                Log.d("rand=0",dietSeCode.get(0));
             PreferenceManager.setString(mContext, "dietSeCode", dietSeCode.get(0));
             PreferenceManager.setString(mContext, "mainCategoryName", getString(R.string.study_diet_main_category_name));
-            Log.d("열공식단","enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
             intent = new Intent(getApplicationContext(), RecommendDietListActivity.class);
             startActivity(intent);
             break;
             case 1:
-                Log.d("rand=1",dietSeCode.get(1));
                 PreferenceManager.setString(mContext, "dietSeCode", dietSeCode.get(1));
                 PreferenceManager.setString(mContext, "mainCategoryName", getString(R.string.healthy_diet_main_category_name));
-                Log.d("건강식단","enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 intent = new Intent(getApplicationContext(), RecommendDietListActivity.class);
                 startActivity(intent);
                 break;
             case 2:
-                Log.d("rand=2",dietSeCode.get(2));
                 PreferenceManager.setString(mContext, "dietSeCode", dietSeCode.get(2));
                 PreferenceManager.setString(mContext, "mainCategoryName", getString(R.string.home_meal_main_category_name));
-                Log.d("가정식식단","enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 intent = new Intent(getApplicationContext(), RecommendDietListActivity.class);
                 startActivity(intent);
                 break;
             case 3:
-                Log.d("rand=3",dietSeCode.get(3));
                 PreferenceManager.setString(mContext, "dietSeCode", dietSeCode.get(3));
                 PreferenceManager.setString(mContext, "mainCategoryName", getString(R.string.event_diet_main_category_name));
-                Log.d("이벤트식단","enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 intent = new Intent(getApplicationContext(), RecommendDietListActivity.class);
                 startActivity(intent);
                 break;
             case 4:
-                Log.d("rand=4",dietSeCode.get(4));
                 PreferenceManager.setString(mContext, "dietSeCode", dietSeCode.get(4));
                 PreferenceManager.setString(mContext, "mainCategoryName", getString(R.string.refresh_diet_main_category_name));
-                Log.d("기분up식단","enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
                 intent = new Intent(getApplicationContext(), RecommendDietListActivity.class);
                 startActivity(intent);
                 break;
