@@ -82,14 +82,17 @@ public class SubActivity extends AppCompatActivity {
         String recipe = intent.getStringExtra("recipe");
         String word = intent.getStringExtra("ingredients");
         String image = intent.getStringExtra("image");
+        String category = intent.getStringExtra("info");
 
         TextView Recipe = (TextView)findViewById(R.id.food_recipe);
         Recipe.setText(recipe);
         TextView FN = (TextView)findViewById(R.id.foodNm);
         FN.setText(foodNm);
         ImageView img = (ImageView)findViewById(R.id.imageView4);
+        TextView cat = (TextView)findViewById(R.id.textView9);
+        cat.setText(category);
         if(image == null){
-          img.setImageResource(R.drawable.ic_lipid_icon);
+          img.setImageResource(R.drawable.noimg);
         }
         else GlideApp.with(this).load(image).into(img);
        //ingredients에 재료 정보 넣기 일단 임의로

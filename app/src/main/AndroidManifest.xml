@@ -5,17 +5,30 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mobile_teamproject_bundle">
+        android:theme="@style/Theme.Mobile_teamproject_bundle"
+        android:usesCleartextTraffic="true">
+        <service
+            android:name=".SelectDiet"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".RecommendCustomDietService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".DietRecommendService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SubActivity">
-        </activity>
-        <activity android:name=".ExercisingActivity">
-        </activity>
-        <activity android:name=".RecommendDietListActivity"/>
-        <activity android:name=".ExercisePlanActivity">
-        </activity>
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".Select_Diet"/>
-        <activity android:name=".Diet_Recommend"/>
-        <activity android:name=".InsertActivity">
-        </activity>
+        <activity android:name=".SubActivity" />
+        <activity android:name=".ExercisingActivity" />
+        <activity android:name=".ExercisePlanActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Select_Diet" />
+        <activity android:name=".InsertActivity" />
     </application>
 
 </manifest>

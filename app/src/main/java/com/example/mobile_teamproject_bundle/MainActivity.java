@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     String recipeOrder;
     String ingredients;
     String foodimg;
+    String category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity{
         recipeOrder = intent.getStringExtra("recipeOrder");
         ingredients = intent.getStringExtra("materialInfo");
         foodimg = intent.getStringExtra("foodImage");
+        category = intent.getStringExtra("calorieInfo");
+
         food_name.setText(intent.getStringExtra("foodName"));
         if(foodimg==null) {
-            food_img.setImageResource(R.drawable.ic_lipid_icon);
+            food_img.setImageResource(R.drawable.noimg);
         }
         else GlideApp.with(this).load(foodimg).into(food_img);
         food_info.setText(intent.getStringExtra("recipeOrder"));
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity{
         intent.putExtra("recipe",recipeOrder);
         intent.putExtra("ingredients",ingredients);
         intent.putExtra("image",foodimg);
+        intent.putExtra("info",category);
         startActivity(intent);
     }
     public void toExercising(View target) {

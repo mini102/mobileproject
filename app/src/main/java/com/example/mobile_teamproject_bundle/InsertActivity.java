@@ -61,8 +61,10 @@ public class InsertActivity extends AppCompatActivity {
                 create_body_file.Body_Write();
                 Disease_File create_disease_file = new Disease_File();
                 create_disease_file.Disease_Write();
-                Intent intent = new Intent(InsertActivity.this, Select_Diet.class);
-                startActivity(intent);
+                setContentView(R.layout.waiting);
+                startService(new Intent(getApplicationContext(), SelectDiet.class));
+                        //Intent intent = new Intent(InsertActivity.this, Select_Diet.class);
+                //startActivity(intent);
                 //intent = new Intent(InsertActivity.this, MainActivity.class);
                 //startActivity(intent);
             }

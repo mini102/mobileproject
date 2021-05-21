@@ -45,6 +45,7 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="174dp"
         android:layout_height="289dp"
+        android:background="#F8F6F6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
@@ -54,10 +55,12 @@
 
         <TextView
             android:id="@+id/profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="174dp"
+            android:layout_height="27dp"
             android:background="#BEE68C"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="PROFILE"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -81,6 +84,7 @@
             android:id="@+id/height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Height : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,6 +108,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Name : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,6 +133,7 @@
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Age : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +157,7 @@
             android:id="@+id/weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Weight : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,6 +181,7 @@
             android:id="@+id/bfr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Body Fat Rate : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -197,6 +205,7 @@
             android:id="@+id/disease"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Disease : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -233,6 +242,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="173dp"
         android:layout_height="291dp"
+        android:background="#F8F7F7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.932"
@@ -240,22 +250,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.902">
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="174dp"
+            android:layout_height="31dp"
+            android:onClick="toExercising"
+            android:text="오늘의 운동"
+            app:layout_constraintBottom_toTopOf="@+id/exercise_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exercise" />
+
         <LinearLayout
             android:id="@+id/exercise_list"
-            android:layout_width="173dp"
-            android:layout_height="273dp"
+            android:layout_width="179dp"
+            android:layout_height="223dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/exercise"
             app:layout_constraintVertical_bias="1.0">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="toExercising"
-                android:text="오늘의 운동" />
 
             <ListView
                 android:layout_width="match_parent"
@@ -264,10 +278,12 @@
 
         <TextView
             android:id="@+id/exercise"
-            android:layout_width="0dp"
-            android:layout_height="18dp"
+            android:layout_width="170dp"
+            android:layout_height="26dp"
             android:background="#BEE68C"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="Today's Exercise"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -293,6 +309,7 @@
             android:layout_width="384dp"
             android:layout_height="33dp"
             android:background="#BEE68C"
+            android:fontFamily="@font/font"
             android:text="Today's Food"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -304,8 +321,8 @@
 
         <ImageView
             android:id="@+id/food_img"
-            android:layout_width="190dp"
-            android:layout_height="144dp"
+            android:layout_width="174dp"
+            android:layout_height="140dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -319,6 +336,7 @@
             android:layout_width="382dp"
             android:layout_height="48dp"
             android:background="#F6C532"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:text="당근주스"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -328,18 +346,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.157" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/recipe"
-            android:layout_width="167dp"
-            android:layout_height="45dp"
+            android:layout_width="175dp"
+            android:layout_height="41dp"
+            android:background="@android:color/holo_orange_light"
+            android:fontFamily="@font/sdsamliphopangchebasic"
             android:onClick="toRecipe"
             android:text="RECIPE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.925"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.939" />
+            app:layout_constraintVertical_bias="0.884" />
 
         <ScrollView
             android:layout_width="194dp"
@@ -355,6 +375,7 @@
                 android:id="@+id/food_script"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:text="food_recipe" />
         </ScrollView>
 
