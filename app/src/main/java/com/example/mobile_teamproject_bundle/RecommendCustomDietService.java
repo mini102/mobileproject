@@ -34,7 +34,7 @@ public class RecommendCustomDietService extends Service {
     private ArrayList<String> lipidInfo;
     public ArrayList<Body> body = new ArrayList<Body>();
     public ArrayList<Disease> disease = new ArrayList<Disease>();
-    private ArrayList<String> Dingredient = new ArrayList<>();
+    private ArrayList<String> Dingredient= new ArrayList<>();
 
     FoodInfo_Parser Parser = new FoodInfo_Parser();
     ArrayList<PriceDataStruct> Data = new ArrayList<PriceDataStruct>();
@@ -140,22 +140,19 @@ public class RecommendCustomDietService extends Service {
     }
     private void Recommed () {
         //DB의 정보와 재료 비교하여 맞는 레시피 반환
-        int cursor=0;
         int num = 3;
-        int position = (int) (Math.random() * (num - 1));
+        int position;
             /*Log.d("질병", disease.get(0).disease_name);
             Log.d("좋은 식재료", disease.get(0).disease_foods.get(0));
             Log.d("좋은 식재료2", disease.get(0).disease_foods.get(1));*/
+        Dingredient.clear();
         String[] sickness = user.disease.split("_");  //당뇨,암
-        for (int i=0;i<disease.size();i++) {
+        for (int i=0;i<9;i++) {
             for (int j =0; j < sickness.length; j++) {
                 if (disease.get(i).disease_name.contains(sickness[j])) {
-                    //num = disease.get(i).disease_foods.size();
-                    //position = (int) (Math.random() * (num - 1));
-                    //Log.d("질병",disease.get(i).disease_name);
-                    //Log.d("num", String.valueOf(disease.get(i).disease_foods.size()));
+                    Log.d("size", String.valueOf(disease.get(i).disease_foods.size()));
                     for(int k =0 ;k<disease.get(i).disease_foods.size();k++) {
-                        //Log.d("add",disease.get(i).disease_foods.get(k));
+                        Log.d("add",disease.get(i).disease_foods.get(k));
                         Dingredient.add(disease.get(i).disease_foods.get(k));
                     }
                 }
@@ -171,17 +168,16 @@ public class RecommendCustomDietService extends Service {
 
         Log.d("체질",body_check);
 
-        for (int i=0;i<body.size();i++) {
+        for (int i=0;i<3;i++) {
             if (body.get(i).body_name.contains(body_check)) {
                 for(int k =0 ;k<3;k++) {
-                    //Log.d("body",body.get(i).body_foods.get(k));
                     Dingredient.add(body.get(i).body_foods.get(k));
                 }
             }
         }
-               Log.d("+체질 좋은 재료",String.valueOf(Dingredient));
+        Log.d("+체질 좋은 재료",String.valueOf(Dingredient));
 
-        num = foodName.size();
+        num = materialInfo.size();
         position = (int) (Math.random() * (num - 1));
 
         Log.d("size", String.valueOf(materialInfo.size()));
@@ -189,7 +185,7 @@ public class RecommendCustomDietService extends Service {
         //Log.d("mat", materialInfo.get(position));
         if(materialInfo.size()!=0) {
             for (int i = 0; i < Dingredient.size(); i++) {
-                if (materialInfo.get(position).contains(Dingredient.get(i))) {
+                if (materialInfo.get(position)!=null&&materialInfo.get(position).contains(Dingredient.get(i))) {
                     //Log.d("Find!!!!","Yeah");
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("foodName", foodName.get(position));

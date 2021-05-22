@@ -17,8 +17,14 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     public void toInsert(View target) {
-        Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
-        startActivity(intent);
+        CheckInformation check = new CheckInformation();
+        if (check.CheckUserInformation() == false) {
+            Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
+            startActivity(intent);
+        } else if (check.CheckUserInformation() == true) {
+            setContentView(R.layout.waiting);
+            startService(new Intent(getApplicationContext(), SelectDiet.class));
+        }
     }
 
     public void toExercisePlan(View target) {

@@ -125,4 +125,8 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(getApplicationContext(), ExercisingActivity.class);
         startActivity(intent);
     }
+    public void modifyUserInformation(View target) {
+        Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
+        startActivity(intent);
+    }
 }
