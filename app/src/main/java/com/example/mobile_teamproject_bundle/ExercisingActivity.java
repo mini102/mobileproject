@@ -1,6 +1,8 @@
 package com.example.mobile_teamproject_bundle;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -8,25 +10,33 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ExercisingActivity extends AppCompatActivity {
-    String key = "하체운동";
+    public static final String PREFS_NAME = "MyPrefs";
+    String search = "하체운동";
     String[] exercise = {"하체운동","상체운동","허리운동","요가"};
-    float rating =0;
+    int Size;
+    int[] rating = new int[exercise.length];
     //boolean watch = false;
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        Size = settings.getInt("size",0);
+        for(int j=0;j<Size;j++) {
+            rating[j] = settings.getInt(String.valueOf(j), 0);
+        }
         setContentView(R.layout.exercise_video);
 
-        watching();
-        rating++;
+        //watching(search);
+        //rating++;
 
         exerciseListAdapter Adapter  = new
-                exerciseListAdapter(this, exercise);
+                exerciseListAdapter(this, exercise,rating);
 
         ListView listview = (ListView) findViewById(R.id.ex_list);
         listview.setAdapter((ListAdapter) Adapter);
@@ -34,16 +44,23 @@ public class ExercisingActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                key = exercise[position];
-                watching();
-                rating++;
-                RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar);
-                ratingBar.setRating(rating);
+                search = exercise[position];
+                watching(search);
+                //rating+=20;
+                rating[position]+=20;
+                ProgressBar pro = (ProgressBar)view.findViewById(R.id.progressBar);
+                if (rating[position]< 0 || rating[position] > 100) {
+                    Log.d("rating","invalidate");
+                } else {
+                    // 변환된 값을 프로그레스바에 적용.
+                    pro.setProgress(rating[position]) ;
+                }
+                //ProgressBar pro = (ProgressBar) findViewById(R.id.progressBar);
             }
         });
     }
 
-    public void watching(){
+        public void watching(String key){
         WebView mWebView = (WebView) findViewById(R.id.webView2);
 
         mWebView.setWebViewClient(new WebViewClient()); // 클릭시 새창 안뜨게
@@ -61,4 +78,17 @@ public class ExercisingActivity extends AppCompatActivity {
 
         mWebView.loadUrl("https://www.youtube.com/results?search_query="+ key);
     }
+
+   public void onStop(){
+       super.onStop();
+       SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+       SharedPreferences.Editor editor = settings.edit();
+       editor.putInt("size",rating.length);
+       for(int i=0;i<rating.length;i++) {
+           Log.d("save", String.valueOf(rating[i]));
+           editor.putInt(String.valueOf(i), rating[i]);
+       }
+       editor.commit();
+   }
+
 }

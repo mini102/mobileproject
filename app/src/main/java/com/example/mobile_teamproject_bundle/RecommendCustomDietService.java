@@ -22,6 +22,7 @@ public class RecommendCustomDietService extends Service {
     String foodImg;
     String foodInfo;
     String body_check = "정상체중";
+    String[] mat;
     User user;
 
     private ArrayList<String> foodName;
@@ -64,6 +65,7 @@ public class RecommendCustomDietService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.d("start","service");
                 getAPI();
                 Recommed();
             }
@@ -110,13 +112,16 @@ public class RecommendCustomDietService extends Service {
                             foodImage.add(xpp.getText());
                         } else if (tag.equals("matrlInfo")) {
                             xpp.next();
+                            //Log.d("mat",xpp.getText());
                             materialInfo.add(xpp.getText());
+                            materialInfo.add("_");
                         } else if (tag.equals("ckngMthInfo")) {
                             xpp.next();
                             recipeOrder.add(xpp.getText());
                         } else if (tag.equals("clriInfo")) {
                             xpp.next();
                             calorieInfo.add(xpp.getText());
+                            //materialInfo.add("_");
                         } else if (tag.equals("crbhInfo")) {
                             xpp.next();
                             carbohydratesInfo.add(xpp.getText());
@@ -142,23 +147,20 @@ public class RecommendCustomDietService extends Service {
         //DB의 정보와 재료 비교하여 맞는 레시피 반환
         int num = 3;
         int position;
-            /*Log.d("질병", disease.get(0).disease_name);
-            Log.d("좋은 식재료", disease.get(0).disease_foods.get(0));
-            Log.d("좋은 식재료2", disease.get(0).disease_foods.get(1));*/
         Dingredient.clear();
         String[] sickness = user.disease.split("_");  //당뇨,암
         for (int i=0;i<9;i++) {
             for (int j =0; j < sickness.length; j++) {
                 if (disease.get(i).disease_name.contains(sickness[j])) {
-                    Log.d("size", String.valueOf(disease.get(i).disease_foods.size()));
+                    //Log.d("size", String.valueOf(disease.get(i).disease_foods.size()));
                     for(int k =0 ;k<disease.get(i).disease_foods.size();k++) {
-                        Log.d("add",disease.get(i).disease_foods.get(k));
+                        //Log.d("add",disease.get(i).disease_foods.get(k));
                         Dingredient.add(disease.get(i).disease_foods.get(k));
                     }
                 }
             }
         }
-        Log.d("질병 좋은 재료", String.valueOf(Dingredient));
+        //Log.d("질병 좋은 재료", String.valueOf(Dingredient));
 
         float body_fat =  Float.parseFloat(user.body_fat_rate);  //체지방률
         if(body_fat<18){
@@ -166,7 +168,7 @@ public class RecommendCustomDietService extends Service {
         }else if(23<body_fat&&body_fat<25) body_check = "과체중";
         else if(25<body_fat) body_check = "비만";
 
-        Log.d("체질",body_check);
+        //Log.d("체질",body_check);
 
         for (int i=0;i<3;i++) {
             if (body.get(i).body_name.contains(body_check)) {
@@ -177,34 +179,43 @@ public class RecommendCustomDietService extends Service {
         }
         Log.d("+체질 좋은 재료",String.valueOf(Dingredient));
 
-        num = materialInfo.size();
-        position = (int) (Math.random() * (num - 1));
-
-        Log.d("size", String.valueOf(materialInfo.size()));
-        Log.d("position", String.valueOf(position));
-        //Log.d("mat", materialInfo.get(position));
+        num = foodName.size();
+        //position = (int) (Math.random() * (num - 1));
+        //Log.d("size", String.valueOf(foodName.size()));
+        //Log.d("foodname", String.valueOf(foodName));
+        //Log.d("size", String.valueOf(materialInfo.size()));
+        //Log.d("materials", String.valueOf(materialInfo));
         if(materialInfo.size()!=0) {
-            for (int i = 0; i < Dingredient.size(); i++) {
-                if (materialInfo.get(position)!=null&&materialInfo.get(position).contains(Dingredient.get(i))) {
-                    //Log.d("Find!!!!","Yeah");
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("foodName", foodName.get(position));
-                    intent.putExtra("foodImage", foodImage.get(position));
-                    intent.putExtra("materialInfo", materialInfo.get(position));
-                    intent.putExtra("recipeOrder", recipeOrder.get(position));
-                    intent.putExtra("calorieInfo", calorieInfo.get(position));
-                    intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(position));
-                    intent.putExtra("proteinInfo", proteinInfo.get(position));
-                    intent.putExtra("lipidInfo", lipidInfo.get(position));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    return;
+           String str = "";
+            for (String matt : materialInfo) {
+                str += matt;
+            }
+            //Log.d("str",str);
+            mat = str.split("_");
+            //Log.d("matSize", String.valueOf(mat.length));
+            //Log.d("mat", String.valueOf(mat));
+            for(int j=0;j<Dingredient.size();j++) {
+                for (int i = 0; i < mat.length; i++) {
+                    //Log.d("mat",mat[i]);
+                    if (mat[i].contains(Dingredient.get(j))) {
+                        //Log.d("Find!!!!","Yeah");
+                        position = i;
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("foodName", foodName.get(position));
+                        intent.putExtra("foodImage", foodImage.get(position));
+                        intent.putExtra("materialInfo", materialInfo.get(position));
+                        intent.putExtra("recipeOrder", recipeOrder.get(position));
+                        intent.putExtra("calorieInfo", calorieInfo.get(position));
+                        intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(position));
+                        intent.putExtra("proteinInfo", proteinInfo.get(position));
+                        intent.putExtra("lipidInfo", lipidInfo.get(position));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        return;
+                    }
                 }
             }
         }
-        //Intent intent = new Intent(getApplicationContext(), Select_Diet.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //startActivity(intent);
         startService(new Intent(this, SelectDiet.class));
     }
 }
