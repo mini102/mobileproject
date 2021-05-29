@@ -7,6 +7,19 @@
     android:background="#FFE696"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="286dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="112dp"
+        android:background="#FFC107"
+        android:fontFamily="@font/sdsamliphopangcheoutline"
+        android:text="@string/appName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="36dp"
@@ -26,20 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
-
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="267dp"
-        android:layout_height="37dp"
-        android:background="#BEE68C"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023">
-
-    </SearchView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -266,31 +265,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.902">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="174dp"
-            android:layout_height="31dp"
-            android:onClick="toExercising"
-            android:text="오늘의 운동"
-            app:layout_constraintBottom_toTopOf="@+id/exercise_list"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exercise" />
-
-        <LinearLayout
-            android:id="@+id/exercise_list"
-            android:layout_width="179dp"
-            android:layout_height="223dp"
-            android:orientation="vertical"
+        <ListView
+            android:id="@+id/exercise_listview"
+            android:layout_width="173dp"
+            android:layout_height="233dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/exercise"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="0.982" />
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/reco_exercise"
+            android:layout_width="172dp"
+            android:layout_height="23dp"
+            android:text="추천 운동"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/exercise"
+            app:layout_constraintVertical_bias="0.126" />
 
         <TextView
             android:id="@+id/exercise"
@@ -305,6 +301,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/go7days"
+            android:layout_width="43dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="24dp"
+            android:onClick="toWeek"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_week" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -327,6 +333,7 @@
             android:background="#BEE68C"
             android:fontFamily="@font/font"
             android:text="Today's Food"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -21,8 +21,8 @@ public class Body_File extends AppCompatActivity {
         }
         try{
             fw = new FileWriter(file+"/"+FILENAME);
-            fw.write("저체중,치즈_우유_호두\n" +
-                    "과체중,갈치_고등어_해산물_닭고기\n" +
+            fw.write("저체중,치즈_우유_호두_콩_달걀_두부\n" +
+                    "과체중,갈치_고등어_해산물_닭고기_미역_김\n" +
                     "비만,고구마_닭가슴살_두부"
             );
             fw.close();

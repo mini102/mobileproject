@@ -9,6 +9,7 @@
     <string name="home_meal_main_category_name">가정식 식단</string>
     <string name="event_diet_main_category_name">이벤트 식단</string>
     <string name="refresh_diet_main_category_name">기분 UP 식단</string>
+    <string name = "appName">Diet and Health</string>
     <!--network-->
     <string name="network_connected_message">네트워크가 연결되었습니다. 해당 서비스 이용이 가능합니다.</string>
     <string name="network_unconnected_message">네트워크가 연결되지 않았습니다. 다시 설정해 주시길 바랍니다.</string>

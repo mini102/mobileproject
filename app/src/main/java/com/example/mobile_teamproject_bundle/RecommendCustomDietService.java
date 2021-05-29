@@ -193,22 +193,24 @@ public class RecommendCustomDietService extends Service {
             //Log.d("str",str);
             mat = str.split("_");
             //Log.d("matSize", String.valueOf(mat.length));
-            //Log.d("mat", String.valueOf(mat));
+            /*for(int j=0;j<mat.length;j++) {
+                Log.d("mat", mat[j]);
+            }*/
             for(int j=0;j<Dingredient.size();j++) {
                 for (int i = 0; i < mat.length; i++) {
-                    //Log.d("mat",mat[i]);
+                    //Log.d("matting",mat[i]);
                     if (mat[i].contains(Dingredient.get(j))) {
                         //Log.d("Find!!!!","Yeah");
-                        position = i;
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("foodName", foodName.get(position));
-                        intent.putExtra("foodImage", foodImage.get(position));
-                        intent.putExtra("materialInfo", materialInfo.get(position));
-                        intent.putExtra("recipeOrder", recipeOrder.get(position));
-                        intent.putExtra("calorieInfo", calorieInfo.get(position));
-                        intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(position));
-                        intent.putExtra("proteinInfo", proteinInfo.get(position));
-                        intent.putExtra("lipidInfo", lipidInfo.get(position));
+                        intent.putExtra("foodName", foodName.get(i));
+                        intent.putExtra("foodImage", foodImage.get(i));
+                        Log.d("material",mat[i]);
+                        intent.putExtra("materialInfo", mat[i]);
+                        intent.putExtra("recipeOrder", recipeOrder.get(i));
+                        intent.putExtra("calorieInfo", calorieInfo.get(i));
+                        intent.putExtra("carbohydratesInfo", carbohydratesInfo.get(i));
+                        intent.putExtra("proteinInfo", proteinInfo.get(i));
+                        intent.putExtra("lipidInfo", lipidInfo.get(i));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         return;

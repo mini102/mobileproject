@@ -6,10 +6,14 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -19,15 +23,31 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity{
     private static final int NOTIFICATION_ID = 12;
+    public static final String PREFS_NAME = "Prefs";
 
     String foodNm;
     String recipeOrder;
     String ingredients;
     String foodimg;
     String category;
+
+    String exercise1;
+    String exercise2;
+    String exercise3;
+    boolean New_recommend;
+    int first = 0;
+
+    //ArrayList<String> ex_list = new ArrayList<String>();
+    //ArrayList<String> x_list = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int Size = settings.getInt("size", 0);
+        for(int i=0;i<Size;i++) {
+            x_list.add(settings.getString(String.valueOf(i),"전 리스트가 없음"));
+        }*/
         setContentView(R.layout.mainmenu);
 
         TextView main_name = findViewById(R.id.ented_name);
@@ -88,6 +108,77 @@ public class MainActivity extends AppCompatActivity{
         }
         else if(getTime == "18")  //저녁
             senddinnerNotification();
+        int randomValue;
+        int randomValue_exercise;
+
+        ArrayList<Exercise> exercise_list = new ArrayList<Exercise>();
+        Exercise_File read_exercise = new Exercise_File();
+        read_exercise.Exercise_Read(exercise_list);
+        System.out.println(exercise_list.get(0).exercise_name);
+        System.out.println(exercise_list.get(0).exercise_names.get(0));
+        randomValue = (int) (Math.random()*(user.diseases.size()-1));
+        System.out.println(user.diseases.get(randomValue));
+
+        ListView ex_view = (ListView) findViewById(R.id.exercise_listview);
+        ArrayList<String> ex_list = new ArrayList<String>();
+
+        for(int i=0;i<exercise_list.size();i++){
+            if(user.diseases.get(randomValue).equals(exercise_list.get(i).disease_name)){
+                int a[] = new int[3];
+                for(int k=0; k<3; k++) {
+                    //Log.d("k", String.valueOf(k));
+                    a[k]=(int) (Math.random()*(exercise_list.get(i).exercise_names.size()-1));
+                    //Log.d("a[k]", String.valueOf(a[k]));
+                    for(int j=0; j<k;j++) {
+                        //Log.d("j", String.valueOf(j));
+                        if(a[k]==a[j]) {
+                            //Log.d("k","--");
+                            //k--;
+                            break;
+                        }
+                    }
+                }
+                //Log.d("j","end");
+                exercise1 = exercise_list.get(i).exercise_names.get(a[0]);
+                exercise2 = exercise_list.get(i).exercise_names.get(a[1]);
+                exercise3 = exercise_list.get(i).exercise_names.get(a[2]);
+                ex_list.add(exercise_list.get(i).exercise_names.get(a[0]));
+                ex_list.add(exercise_list.get(i).exercise_names.get(a[1]));
+                ex_list.add(exercise_list.get(i).exercise_names.get(a[2]));
+
+                //Log.d("before", String.valueOf(x_list));
+                Log.d("after", String.valueOf(ex_list));
+                //Log.d("first", String.valueOf(first));
+
+                ArrayAdapter ad = new ArrayAdapter(this,android.R.layout.simple_list_item_1,ex_list);
+                ex_view.setAdapter(ad);
+                ex_view.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView parent, View v, int position, long id){
+                        Intent intent = new Intent(getApplicationContext(), ExercisingActivity.class);
+                        //boolean back = intent.getBooleanExtra("back",false);
+                        //Log.d("back", String.valueOf(back));
+                        if(first!=0 ){//|| x_list.equals(ex_list) && ex_list.containsAll(x_list)) {
+                            Log.d("flase","haha");
+                            New_recommend = false; //rating복구
+                        }
+                        else if(first==0){
+                            Log.d("true","haha");
+                            New_recommend = true;  //0
+                            first++;
+                        }
+                        intent.putExtra("운동",ad.getItem(position).toString());
+                        String[] array = ex_list.toArray(new String[ex_list.size()]);
+                        intent.putExtra("recommended",array);
+                        intent.putExtra("IsNew",New_recommend);
+                        startActivity(intent);//startActivity(intent);
+//                        Toast.makeText(getApplicationContext(),
+//                                myAdapter.getItem(position).getMovieName(),
+//                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }
     }
 
     public void sendlaunchNotification(){
@@ -116,17 +207,34 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(getApplicationContext(), SubActivity.class);
         intent.putExtra("name",foodNm);
         intent.putExtra("recipe",recipeOrder);
+        Log.d("ingredient",ingredients);
         intent.putExtra("ingredients",ingredients);
         intent.putExtra("image",foodimg);
         intent.putExtra("info",category);
         startActivity(intent);
     }
-    public void toExercising(View target) {
-        Intent intent = new Intent(getApplicationContext(), ExercisingActivity.class);
+
+    public void toWeek(View target) {
+        Intent intent = new Intent(getApplicationContext(), ExercisePlanActivity.class);
         startActivity(intent);
     }
+    //    public void toExercising(View target) {
+//        Intent intent = new Intent(getApplicationContext(), ExercisingActivity.class);
+//        startActivity(intent);
+//    }
     public void modifyUserInformation(View target) {
         Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
         startActivity(intent);
+    }
+
+    public void onStop(){
+        super.onStop();
+        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("size",ex_list.size());
+        for(int i=0;i<ex_list.size();i++) {
+            editor.putString(String.valueOf(i), ex_list.get(i));
+        }
+        editor.commit();*/
     }
 }

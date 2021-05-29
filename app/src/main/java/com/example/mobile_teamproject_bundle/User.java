@@ -1,5 +1,7 @@
 package com.example.mobile_teamproject_bundle;
 
+import java.util.ArrayList;
+
 public class User {
     String name;
     String age;
@@ -8,6 +10,8 @@ public class User {
     String disease;
     String body_fat_rate;
     String body;
+    ArrayList<String> diseases = new ArrayList<String>();
+
     public String getBody_Fat_Rate(User user){
         double height=(Double.parseDouble(user.height)/100);
         double weight=Double.parseDouble(user.weight);;

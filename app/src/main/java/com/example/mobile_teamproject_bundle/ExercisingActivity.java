@@ -1,5 +1,6 @@
 package com.example.mobile_teamproject_bundle;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,24 +17,42 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class ExercisingActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "MyPrefs";
     String search = "하체운동";
-    String[] exercise = {"하체운동","상체운동","허리운동","요가"};
+    //ArrayList<String> arrayList = (ArrayList<String>) intent.getSerializableExtra("recommended");
+    String[] exercise  = {"하체운동","상체운동","허리운동","요가"};
     int Size;
     int[] rating = new int[exercise.length];
-    //boolean watch = false;
+    boolean IsNewR = false;
+    boolean watch;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        Size = settings.getInt("size",0);
-        for(int j=0;j<Size;j++) {
-            rating[j] = settings.getInt(String.valueOf(j), 0);
+
+        //Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        //intent.putExtra("back",false);
+
+        Intent in = getIntent();
+        exercise  = in.getStringArrayExtra("recommended");
+        search = in.getStringExtra("운동");
+        IsNewR = in.getBooleanExtra("IsNew",true);
+        Log.d("IsNew?", String.valueOf(IsNewR));
+
+        if(!IsNewR) {
+            Size = settings.getInt("size", 0);
+            for (int j = 0; j < Size; j++) {
+                rating[j] = settings.getInt(String.valueOf(j), 0);
+            }
         }
         setContentView(R.layout.exercise_video);
 
         //watching(search);
         //rating++;
+
+        watching(search);
 
         exerciseListAdapter Adapter  = new
                 exerciseListAdapter(this, exercise,rating);
@@ -55,7 +74,6 @@ public class ExercisingActivity extends AppCompatActivity {
                     // 변환된 값을 프로그레스바에 적용.
                     pro.setProgress(rating[position]) ;
                 }
-                //ProgressBar pro = (ProgressBar) findViewById(R.id.progressBar);
             }
         });
     }
@@ -83,10 +101,15 @@ public class ExercisingActivity extends AppCompatActivity {
        super.onStop();
        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
        SharedPreferences.Editor editor = settings.edit();
+       Intent intent = new Intent(getApplicationContext(),ExercisePlanActivity.class);
+       //editor.putBoolean("back",true);
        editor.putInt("size",rating.length);
+       intent.putExtra("sizw",rating.length);
+       intent.putExtra("exercise",exercise);
        for(int i=0;i<rating.length;i++) {
-           Log.d("save", String.valueOf(rating[i]));
+           //Log.d("save", String.valueOf(rating[i]));
            editor.putInt(String.valueOf(i), rating[i]);
+           intent.putExtra(String.valueOf(i),rating[i]);
        }
        editor.commit();
    }

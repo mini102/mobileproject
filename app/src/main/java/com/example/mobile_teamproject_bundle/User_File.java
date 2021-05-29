@@ -55,13 +55,17 @@ public class User_File extends AppCompatActivity {
                 user.body_fat_rate=split[4];
                 user.body=split[5];
                 user.disease=split[6];
-                in.close();
+                String[] split2 = split[6].split("_");
+                for(String s : split2) {
+                    user.diseases.add(s);
+                }
             }
 //            fr = new FileReader((file+"/"+FILENAME));
 //            while((data = fr.read())!=-1){
 //                ch = (char)data;
 //                System.out.println(ch);
 //            }
+            in.close();
         }
         catch(IOException e) {
             System.out.println("read err\n");
