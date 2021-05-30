@@ -16,6 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobile_teamproject_bundle"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".AlarmRecevier"
+            android:directBootAware="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".AlarmD"
+            android:directBootAware="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <service
             android:name=".SelectDiet"
             android:enabled="true"

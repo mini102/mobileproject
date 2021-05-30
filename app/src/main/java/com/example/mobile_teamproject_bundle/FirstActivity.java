@@ -23,6 +23,11 @@ public class FirstActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (check.CheckExerciseInformation() ==true&&check.CheckUserInformation() == true) {
             setContentView(R.layout.waiting);
+            User user = new User();
+            User_File file = new User_File();
+            file.User_Read(user);
+            TextView forYou = (TextView)findViewById(R.id.ForU);
+            forYou.setText(user.name+"님을 위한 식단과 운동을 추천 중입니다 :)");
             startService(new Intent(getApplicationContext(), SelectDiet.class));
         }
     }

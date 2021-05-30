@@ -1,5 +1,6 @@
 package com.example.mobile_teamproject_bundle;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
 
 public class ExercisingActivity extends AppCompatActivity {
+    private static final int NOTIFICATION_ID = 13;
     public static final String PREFS_NAME = "MyPrefs";
     String search = "하체운동";
     //ArrayList<String> arrayList = (ArrayList<String>) intent.getSerializableExtra("recommended");
@@ -45,6 +48,9 @@ public class ExercisingActivity extends AppCompatActivity {
             Size = settings.getInt("size", 0);
             for (int j = 0; j < Size; j++) {
                 rating[j] = settings.getInt(String.valueOf(j), 0);
+                if(rating[j]!=100){
+                    sendNotification();
+                }
             }
         }
         setContentView(R.layout.exercise_video);
@@ -53,6 +59,10 @@ public class ExercisingActivity extends AppCompatActivity {
         //rating++;
 
         watching(search);
+
+        for(int u =0 ;u<exercise.length;u++) {
+            Log.d("exercise", exercise[u]);
+        }
 
         exerciseListAdapter Adapter  = new
                 exerciseListAdapter(this, exercise,rating);
@@ -76,6 +86,17 @@ public class ExercisingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void sendNotification(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setContentTitle("오늘의 추천 운동을 해보세요!");
+        builder.setContentText("아직 오늘의 운동 할당량이 채워지지 않았어요!");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID,builder.build());
     }
 
         public void watching(String key){

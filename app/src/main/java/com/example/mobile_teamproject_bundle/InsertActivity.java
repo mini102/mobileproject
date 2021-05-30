@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.mobile_teamproject_bundle.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class InsertActivity extends AppCompatActivity {
-    public DbOpenHelper user = new DbOpenHelper();
+    //    public DbOpenHelper user = new DbOpenHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +66,99 @@ public class InsertActivity extends AppCompatActivity {
                 create_body_file.Body_Write();
                 Disease_File create_disease_file = new Disease_File();
                 create_disease_file.Disease_Write();
-                Exercise_File read_exercise = new Exercise_File();
-                read_exercise.Exercise_Write();
+                Exercise_File write_exercise = new Exercise_File();
+                write_exercise.Exercise_Write();
+                check_date cd = new check_date();
+                cd.check_date_Write("FALSE");
+                make_week_exercise();
+//                String selected_exercise;
+//                String exercise1 = new String();
+//                String exercise2 = new String();
+//                String exercise3 = new String();
+//                ArrayList<Exercise> exercise_list = new ArrayList<Exercise>();
+//                Exercise_File read_exercise = new Exercise_File();
+//                read_exercise.Exercise_Read(exercise_list);
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise="월,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"화,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"수,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"목,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"금,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"토,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                select_exercise(user,exercise_list,exercise1,exercise2,exercise3);
+//                selected_exercise=selected_exercise+"\n"+"일,"+exercise1+"_"+exercise2+"_"+exercise3;
+//                Date_Exercise write_user_exercise = new Date_Exercise();
+//                write_user_exercise.Date_Exercise_Write(selected_exercise);
+
+
                 setContentView(R.layout.waiting);
+
                 startService(new Intent(getApplicationContext(), SelectDiet.class));
             }
         });
 
+    }
+
+
+    public String select_exercise(User user, ArrayList<Exercise> exercise_list) {
+        int randomValue = 0;
+        String exercise1 = "";
+        String exercise2 = "";
+        String exercise3 = "";
+        randomValue = (int) (Math.random() * (user.diseases.size() - 1));
+        for (int i = 0; i < exercise_list.size(); i++) {
+            if (user.diseases.get(randomValue).equals(exercise_list.get(i).disease_name)) {
+                int a[] = new int[3];
+                for (int k = 0; k < 3; k++) {
+                    a[k] = (int) (Math.random() * (exercise_list.get(i).exercise_names.size() - 1));
+                    for (int j = 0; j < k; j++) {
+                        if (a[k] == a[j]) {
+                            k--;
+                            break;
+                        }
+                    }
+                }
+                exercise1 = exercise_list.get(i).exercise_names.get(a[0]);
+                exercise2 = exercise_list.get(i).exercise_names.get(a[1]);
+                exercise3 = exercise_list.get(i).exercise_names.get(a[2]);
+
+            }
+        }
+        return exercise1+"_"+exercise2+"_"+exercise3;
+    }
+
+    public void make_week_exercise(){
+        User user = new User();
+        User_File uf = new User_File();
+        uf.User_Read(user);
+        String selected_exercise;
+        String k;
+
+        ArrayList<Exercise> exercise_list = new ArrayList<Exercise>();
+
+        Exercise_File read_exercise = new Exercise_File();
+        read_exercise.Exercise_Read(exercise_list);
+        k=select_exercise(user,exercise_list);
+        selected_exercise="Mon,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Tue,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Wed,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Thu,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Fri,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Sat,"+k+"\n";
+        k=select_exercise(user,exercise_list);
+        selected_exercise=selected_exercise+"Sun,"+k;
+
+        Date_Exercise write_user_exercise = new Date_Exercise();
+        write_user_exercise.Date_Exercise_Write(selected_exercise);
     }
 }
