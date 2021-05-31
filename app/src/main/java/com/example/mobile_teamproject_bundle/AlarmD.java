@@ -50,7 +50,12 @@ public class AlarmD extends BroadcastReceiver {
         builder.setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
-        manager.notify(1,notification);
+        manager.notify(2,notification);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(context, AlarmD.class);//put your own ReceiverName
+        PendingIntent Intent = PendingIntent.getBroadcast(context, 1, i, 0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
 

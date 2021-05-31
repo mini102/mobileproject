@@ -97,23 +97,49 @@ public class MainActivity extends AppCompatActivity{
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent receiverIntent = new Intent(MainActivity.this, AlarmRecevier.class);
         PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, 0);
-
+        //alarmManager.cancel(pIntent);
+        if (alarmManager!= null) {
+            Log.d("alarm","12");
+            alarmManager.cancel(pIntent);
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pIntent);
+        if(Calendar.getInstance().after(calendar)){
+            calendar.add(Calendar.DAY_OF_MONTH,1);
+        }
 
+        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
+        //Log.d("day", String.valueOf(calendar.DAY_OF_MONTH));
+       // Log.d("hour", String.valueOf(calendar.HOUR_OF_DAY));
+        Log.d("calender", String.valueOf(calendar.getTime()));
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pIntent);//InexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+
+        AlarmManager alarm= (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent receiver = new Intent(MainActivity.this, AlarmD.class);
-        PendingIntent pIn = PendingIntent.getBroadcast(this, 0, receiver, 0);
-
+        PendingIntent pIn = PendingIntent.getBroadcast(this, 1, receiver, 0);
+        //alarmManager.cancel(pIn);
+        if (alarm!= null) {
+            Log.d("alarm","19");
+            alarm.cancel(pIntent);
+        }
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.HOUR_OF_DAY,19);
+        cal.set(cal.HOUR_OF_DAY,10);
+        cal.set(cal.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pIn);
+        if(Calendar.getInstance().after(cal)){
+            cal.add(Calendar.DAY_OF_MONTH,1);
+        }
+        //Log.d("day", String.valueOf(cal.DAY_OF_MONTH));
+        //Log.d("hour", String.valueOf(cal.HOUR_OF_DAY));
+        Log.d("calender dinner", String.valueOf(cal.getTime()));
+        alarm.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pIn);// + AlarmManager.INTERVAL_DAY, pIn);
+        //alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pIn);
         /*Date tomo = null;
         try {
             tomo = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2021-05-30 19:00:00");

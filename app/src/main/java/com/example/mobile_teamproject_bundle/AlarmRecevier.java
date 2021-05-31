@@ -41,7 +41,7 @@ public class AlarmRecevier extends BroadcastReceiver {
 
         //알림창 클릭 시 activity 화면 부름
         Intent intent2 = new Intent(context, FirstActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,101,intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,100,intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setAutoCancel(true);
         builder.setSmallIcon(R.drawable.logo);
@@ -51,5 +51,11 @@ public class AlarmRecevier extends BroadcastReceiver {
 
         Notification notification = builder.build();
         manager.notify(1,notification);
+
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(context, AlarmRecevier.class);//put your own ReceiverName
+        PendingIntent Intent = PendingIntent.getBroadcast(context, 0, i, 0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
