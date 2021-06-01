@@ -1,6 +1,9 @@
 package com.example.mobile_teamproject_bundle;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ExercisingActivity extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 13;
@@ -31,12 +35,10 @@ public class ExercisingActivity extends AppCompatActivity {
     int[] rating = new int[exercise.length];
     boolean IsNewR = false;
     boolean watch;
+    int count=0;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
-        //Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        //intent.putExtra("back",false);
 
         Intent in = getIntent();
         exercise  = in.getStringArrayExtra("recommended");
@@ -49,9 +51,13 @@ public class ExercisingActivity extends AppCompatActivity {
             for (int j = 0; j < Size; j++) {
                 rating[j] = settings.getInt(String.valueOf(j), 0);
                 if(rating[j]!=100){
-                    sendNotification();
+                    count++;
                 }
             }
+        }
+
+        if(count!=0){
+            sendNotification();
         }
         setContentView(R.layout.exercise_video);
 
@@ -89,14 +95,24 @@ public class ExercisingActivity extends AppCompatActivity {
     }
 
     public void sendNotification(){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Intent receiverIntent = new Intent(this, AlarmRecevier.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, 0);
+        //alarmManager.cancel(pIntent);
+        if (alarmManager!= null) {
+            Log.d("alarm","12");
+            alarmManager.cancel(pIntent);
+        }
 
-        builder.setSmallIcon(R.drawable.logo);
-        builder.setContentTitle("오늘의 추천 운동을 해보세요!");
-        builder.setContentText("아직 오늘의 운동 할당량이 채워지지 않았어요!");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID,builder.build());
+        if(Calendar.getInstance().after(calendar)){
+            calendar.add(Calendar.DAY_OF_MONTH,1);
+        }
+
+        //Log.d("exc", String.valueOf(calendar.getTime()));
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+(3 * 60 * 60 * 1000),pIntent);//InexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
     }
 
         public void watching(String key){

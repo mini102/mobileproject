@@ -9,7 +9,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +31,8 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity{
     private static final int NOTIFICATION_ID = 12;
+    public static final String PREFS_NAME = "MyPref";
+    private final int GET_GALLERY = 20;
 
     String foodNm;
     String recipeOrder;
@@ -38,13 +43,18 @@ public class MainActivity extends AppCompatActivity{
     String exercise1;
     String exercise2;
     String exercise3;
+    String x_Day;
     boolean New_recommend;
     int first = 0;
+    ImageView profile_picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenu);
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        x_Day = settings.getString("xDay","Tue");
 
         TextView main_name = findViewById(R.id.ented_name);
         TextView main_age = findViewById(R.id.ented_age);
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity{
         TextView main_disease = findViewById(R.id.ented_disease);
         TextView main_BMI = findViewById(R.id.ented_bfr);
         TextView main_body = findViewById(R.id.che);
-        ImageView profile_picture = findViewById(R.id.imageView3);
+        profile_picture = findViewById(R.id.imageView3);
         User user = new User();
         User_File file = new User_File();
         file.User_Read(user);
@@ -65,6 +75,13 @@ public class MainActivity extends AppCompatActivity{
         main_BMI.setText(user.body_fat_rate);
         main_disease.setText(user.disease);
         profile_picture.setImageResource(R.drawable.logo);
+        profile_picture.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                startActivityForResult(intent,GET_GALLERY);
+            }
+        });
         TextView food_name = findViewById(R.id.food_name);
         ImageView food_img = findViewById(R.id.food_img);
         TextView food_info = findViewById(R.id.food_script);
@@ -139,23 +156,12 @@ public class MainActivity extends AppCompatActivity{
         //Log.d("hour", String.valueOf(cal.HOUR_OF_DAY));
         Log.d("calender dinner", String.valueOf(cal.getTime()));
         alarm.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pIn);// + AlarmManager.INTERVAL_DAY, pIn);
-        //alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pIn);
-        /*Date tomo = null;
-        try {
-            tomo = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2021-05-30 19:00:00");
-            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            am.setInexactRepeating(AlarmManager.RTC, tomo.getTime(), 24 * 60 * 60 * 1000, pIn);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-        //InsertActivity make_file1 = new InsertActivity();
-        //make_file1.make_week_exercise();
-
 
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat weekdayFormat = new SimpleDateFormat("EE", Locale.getDefault());
         String weekDay=weekdayFormat.format(currentTime);
+
+
         ArrayList<Week_Date> week_exercise = new ArrayList<>();
         check_date check = new check_date();
         Week_Date today = new Week_Date();
@@ -201,20 +207,27 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent(getApplicationContext(), ExercisingActivity.class);
                 //boolean back = intent.getBooleanExtra("back",false);
                 //Log.d("back", String.valueOf(back));
-                if(first!=0 ){//|| x_list.equals(ex_list) && ex_list.containsAll(x_list)) {
-                    Log.d("flase","haha");
-                    New_recommend = false; //rating복구
-                }
-                else if(first==0){
+                Log.d("x_day",x_Day);
+                Log.d("today",weekDay);
+                //Log.d("equal?", String.valueOf(x_Day.equals(weekDay)));
+                if(first==0 &&(!x_Day.equals(weekDay))) {
                     Log.d("true","haha");
                     New_recommend = true;  //0
                     first++;
+                }
+                else if(first!=0){
+                    Log.d("flase","haha");
+                    New_recommend = false; //rating복구
                 }
                 intent.putExtra("운동",ad.getItem(position).toString());
                 String[] array = exercise_list.toArray(new String[exercise_list.size()]);
                 intent.putExtra("recommended",array);
                 intent.putExtra("IsNew",New_recommend);
                 startActivity(intent);//startActivity(intent);
+
+                SharedPreferences setting = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor = setting.edit();
+                editor.putString("xDay",weekDay);
             }
         });
     }
@@ -235,5 +248,12 @@ public class MainActivity extends AppCompatActivity{
     public void modifyUserInformation(View target) {
         Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
         startActivity(intent);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
+             Uri selected = data.getData();
+             profile_picture.setImageURI(selected);
+        }
     }
 }
